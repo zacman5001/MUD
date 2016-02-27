@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <string name="line1" index="1">print "" + Fore.CYAN + "......................................."  + "\n"</string>
+  <string name="line1" index="2">print "" + Fore.CYAN + "......................................."  + "\n"</string>
+  <string name="line1" index="3">print "" + Fore.CYAN + "......................................."  + "\n"</string>
+  <string name="line1" index="4">print "" + Fore.CYAN + "......................................."  + "\n"</string>
+  <string name="line1" index="5">print "" + Fore.CYAN + "......................................."  + "\n"</string>
+  <string name="line1" index="6">print "" + Fore.CYAN + "......................................."  + "\n"</string>
+  <string name="line1" index="7">print "" + Fore.CYAN + "......................................."  + "\n"</string>
+  <string name="line1" index="8">print "" + Fore.CYAN + "......................................."  + "\n"</string>
+  <string name="line1" index="9">print "" + Fore.CYAN + ".........................." + Fore.GREEN + "######" + Fore.CYAN + "......."  + "\n"</string>
+  <string name="line1" index="10">print "" + Fore.CYAN + "........................." + Fore.GREEN + "########" + Fore.CYAN + "......"  + "\n"</string>
+  <string name="line1" index="11">print "" + Fore.CYAN + "........................." + Fore.GREEN + "########" + Fore.CYAN + "......" + "\n"</string>
+  <string name="line1" index="12">print "" + Fore.CYAN + ".........................." + Fore.GREEN + "######" + Fore.CYAN + "......." + "\n"</string>
+  <string name="line1" index="13">print "" + Fore.CYAN + "............................" + Fore.YELLOW + "||" + Fore.CYAN + "........."  + "\n"</string>
+  <string name="line1" index="14">print "" + Fore.CYAN + "............................" + Fore.YELLOW + "||" + Fore.CYAN + "........." + "\n"</string>
+  <string name="line1" index="15">print "" + Fore.CYAN + "............................" + Fore.YELLOW + "||" + Fore.CYAN + "........." + "\n"</string>
+  <string name="line1" index="16">print "" + Fore.GREEN + "............................" + Fore.YELLOW + "||" + Fore.GREEN + "........." + "\n"</string>
+  <string name="line1" index="17">print "" + Fore.GREEN + "..........................." + Fore.YELLOW + "/..\\" + Fore.GREEN + "........" + "\n"</string>
+  <string name="line1" index="18">print "" + Fore.GREEN + "......................................."</string>
+  <string name="line1" index="19">print "" + Fore.GREEN + "......................................."</string>
+</data>
