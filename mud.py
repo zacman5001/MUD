@@ -4,7 +4,7 @@
 #11/02/2016, added skills. Type ‘skill check’ to use
 #12/02/2016, added server support. Run 'server', then 'client'. Use localhost for the IP if you're playing locally
 
-
+# Test Commit
 # This is the version that references external data resources
 import time, random, os, logging, socket, threading, sys, thread, colorama
 from colorama import AnsiToWin32, init, Fore
