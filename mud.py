@@ -1,11 +1,6 @@
 # -*- coding: cp1252 -*-
 #Text based game
-#Commit log:
-#11/02/2016, added skills. Type ‘skill check’ to use
-#12/02/2016, added server support. Run 'server', then 'client'. Use localhost for the IP if you're playing locally
 
-# Test Commit
-# This is the version that references external data resources
 import time, random, os, logging, socket, threading, sys, thread, colorama
 from colorama import AnsiToWin32, init, Fore
 import xml.etree.ElementTree as ET
@@ -18,12 +13,7 @@ cordz = 0
 chat = ""
 username = ""
 statusUpdate = 0
-validxPlus = True
-validxMinus = True
-validyPlus = True
-validyMinus = True
-validzPlus = True
-validzMinus = True
+newCharcter = 0
 area = "5050"
 strings = []
 
@@ -34,7 +24,7 @@ subCityGates = ["5050002300-8"]
 
 
 #skills - should probably be transferred to XML when possible
-skills = {'Acting':0,'Agriculture':0,'Architecture':0,'Archery':0,'Art':0,'Astronomy':0,'Carpentry':0,'Chemistry':0,'Cooking':0,'Economics':0,'Fighting':0,'Fishing':0,'Hunting':0,'Law':0,'Logging':0,'Medicine':0,'Magic':0,'Mining':0,'Music':0,'Philosophy':0,'Religion':0,'Sailing':0,'Smithing':0,'Surgery':0,'Writing':0,}
+skills = [['Acting',0],['Agriculture',0],['Architecture',0],['Archery',0],['Art',0],['Astronomy',0],['Carpentry',0],['Chemistry',0],['Cooking',0],['Economics',0],['Fighting',0],['Fishing',0],['Hunting',0],['Law',0],['Leadership',0], ['Medicine',0],['Magic',0],['Mining',0],['Music',0],['Philosophy',0],['Religion',0],['Sailing',0],['Smithing',0],['Surgery',0],['Writing',0],]
 
 #misc
 linesSoFar = 4
@@ -50,8 +40,6 @@ isInTavern = 0
 #Positioning text (I hate Ansi codes)
 def pos( x, y ):
   return '\x1b[' + str(y)+ ';' + str(x) + 'H';
-
-
 
 #Netcode - I never want to touch Ansi codes again in my life jesus christ why
 init(autoreset=True)
@@ -108,8 +96,23 @@ username = raw_input("\nPlease enter your username: ")
 host = raw_input("\nPlease enter the host IP: ")
 os.system("cls")
 
+#Load Charcter (still working on this)
+def loadCharcter(username):
+  global newCharcter
+  global skills
+  count = 0
+  skills = [['Acting',0],['Agriculture',0],['Architecture',0],['Archery',0],['Art',0],['Astronomy',0],['Carpentry',0],['Chemistry',0],['Cooking',0],['Economics',0],['Fighting',0],['Fishing',0],['Hunting',0],['Law',0],['Leadership',0], ['Medicine',0],['Magic',0],['Mining',0],['Music',0],['Philosophy',0],['Religion',0],['Sailing',0],['Smithing',0],['Surgery',0],['Writing',0],]
+  mapParsingVar = ET.parse("users/skills/" + username + ".xml")
+  mapParsingVar = mapParsingVar.getroot()
+  for string in mapParsingVar.findall("string"):
+    while count < 24:
+      count = count + 1
+      skills[count] = (string.text)
+      print skills[count]
+    
+##loadCharcter(username)
 
-
+    
 #Load the map
 mainMapLines = []
 mainFishingSpots = []
@@ -146,11 +149,39 @@ loadBounds("map/regions/5050/blocked.xml")
 
 print[str(strings[0])]
 
-def rendLevel(skillXp):
-  level = (skillXp + 1)** 0.33
-  print "%.0f" % level
-  nullVar = raw_input("Press any key to continue.")
+def rendLevel(page):
+  global skills
+  count = 0
+  skillXp = []
+  if page == 2:
+    try:
+      while count < 17:
+        skillXp = []
+        skillXp = skills[count + 17]
+        level = (skillXp[1] + 1)** 0.33
+        print (pos(48, (4 + count)))+ skillXp[0] + ":    " + "%.0f" % level
+        count = count + 1
+    except:
+      return True
+  else:
+    while count < 17:
+      try:
+        skillXp = []
+        skillXp = skills[count]
+        level = (skillXp[1] + 1)** 0.33
+        print (pos(48, (4 + count))) + skillXp[0] + ":  " + "%.0f" % level
+        count = count + 1
+      except:
+        return True
+  nullVar = raw_input(pos( 1, 24 ) + "Press enter to continue")
   os.system('cls')
+  
+  for iterationNumber in range (1,19):
+    print pos( 2, 3 + iterationNumber),
+    exec (mainMapLines[iterationNumber])
+  if isSearching != 1:
+    print (pos(cordx+4, -cordy +4) + "@")
+  
 
 def move( ):
   global statusUpdate
@@ -255,15 +286,18 @@ def move( ):
   
   
   elif m == ("skill check"):
-    whatSkill = raw_input("Skill name:")
     try:
-      rendLevel(skills[whatSkill])
+      rendLevel(1)
     except KeyError:
-      print "Invalid choice (use initial capital)"
-      time.sleep(2)
-      os.system('cls')
       return False
-  
+      print "ERROR"
+      
+  elif m == ("skill check 2"):
+    try:
+      rendLevel(2)
+    except KeyError:
+      return False
+      print "ERROR"
   
   elif m == ("wait"):
     return True
