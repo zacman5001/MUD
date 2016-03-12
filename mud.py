@@ -100,19 +100,39 @@ os.system("cls")
 def loadCharcter(username):
   global newCharcter
   global skills
-  count = 0
   skills = [['Acting',0],['Agriculture',0],['Architecture',0],['Archery',0],['Art',0],['Astronomy',0],['Carpentry',0],['Chemistry',0],['Cooking',0],['Economics',0],['Fighting',0],['Fishing',0],['Hunting',0],['Law',0],['Leadership',0], ['Medicine',0],['Magic',0],['Mining',0],['Music',0],['Philosophy',0],['Religion',0],['Sailing',0],['Smithing',0],['Surgery',0],['Writing',0],]
   mapParsingVar = ET.parse("users/skills/" + username + ".xml")
   mapParsingVar = mapParsingVar.getroot()
   for string in mapParsingVar.findall("string"):
-    while count < 24:
-      count = count + 1
-      skills[count] = (string.text)
-      print skills[count]
-    
-##loadCharcter(username)
+    exec string.text in globals()
 
-    
+
+
+def saveCharcter():
+  global skills
+  global username
+  skillsPrint = str(skills) 
+  mapParsingVar = open("users/skills/" + username + ".xml", "w")
+  mapParsingVar.write("<data>\n  <string name=\"line1\" index=\"1\">skills = " + skillsPrint + "</string>\n</data>")
+
+
+def createCharcter():
+  print "null"
+
+def grantXp(skillNumber, amount):
+  skills[skillNumber[2]] =   skills[skillNumber[2]] + amount
+  saveCharcter()
+
+try:
+  loadCharcter(username)
+except:
+  createCharcter()
+  print pos(1,1) + "*-----------------------------------------------------------------------------*\n|                             -Charcter Creation-                             |\n*-----------------------------------------------------------------------------*"
+  for y in range (4, 23):
+    print pos(1,y) + "|"
+    print pos(79,y) + "|"
+  m = (raw_input(pos(1,23) + "*-----------------------------------------------------------------------------*\n" + " " + "Input:" + " "))
+ 
 #Load the map
 mainMapLines = []
 mainFishingSpots = []
@@ -181,7 +201,6 @@ def rendLevel(page):
     exec (mainMapLines[iterationNumber])
   if isSearching != 1:
     print (pos(cordx+4, -cordy +4) + "@")
-  
 
 def move( ):
   global statusUpdate
@@ -326,6 +345,8 @@ def event(area):
 s = socket.socket()         # Create a socket
 port = 9009                # Reserve a port 
 s.connect((host, port))
+
+
 
 thread.start_new_thread( connect, (chat,) )
 
